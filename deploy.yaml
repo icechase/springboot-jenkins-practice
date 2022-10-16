@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spring
+  template:
+    metadata:
+      labels:
+        app: spring
+    spec:
+      imagePullSecrets:
+      - name: harbor_admin
+      containers:
+      - name: springboot
+        image: harbor.oldxu.net/base/springboot:v3.0
+        ports:
+        - name: http
+          containerPort: 8080
+        env:            # 传递初始堆内存和最大堆内存占用
+        - name: XMS_OPTS
+          valueFrom:
+            resourceFieldRef:
+              resource: requests.memory
+        - name: XMX_OPTS
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.memory
+        resources:
+          requests:
+            memory: 150Mi
+          limits:
+            memory: 300Mi
+        readinessProbe:         # 就绪探针；如果端口不存活，则从负载均衡中移除
+          tcpSocket:
+            port: http          # http是一个名字；它会获取这个名字对应的端口；
+          initialDelaySeconds: 10
+          failureThreshold: 3
+        
+        livenessProbe:          # 存活探针；获取url，状态码不对那么则触发重启操作
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 10
+          failureThreshold: 3
+
