@@ -2,4 +2,4 @@
 
 JAVA_OPTS="-Xms${XMS_OPTS:-200m} -Xmx${XMX_OPTS:-200m}"
 
-java -jar $JAVA_OPTS /demo-service.jar &>/logs/stdout.log
+java -jar $JAVA_OPTS /demo-service.jar
