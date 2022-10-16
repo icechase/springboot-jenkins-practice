@@ -13,7 +13,7 @@ spec:
         app: spring
     spec:
       imagePullSecrets:
-      - name: harbor_admin
+      - name: harbor-admin
       containers:
       - name: springboot
         image: harbor.oldxu.net/base/springboot:v3.0
