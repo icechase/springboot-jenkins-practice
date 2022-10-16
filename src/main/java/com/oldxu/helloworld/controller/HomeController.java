@@ -8,7 +8,7 @@ public class HomeController {
 
     @RequestMapping("/")
     String home() {
-        return "Hello from Oldxu Kubernetes";
+        return "Hello from Oldxu Kubernetes on Jenkins v1";
     }
 
 }
