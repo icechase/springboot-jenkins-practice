@@ -1,4 +1,4 @@
-FROM harbor.oldxu.net/base/openjdk:8-jre-alpine
+FROM openjdk:8-jre-alpine
 
 COPY target/*.jar /demo-service.jar
 COPY entrypoint.sh /entrypoint.sh
